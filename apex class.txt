@@ -1,0 +1,35 @@
+public class test {
+    public static decimal hub(contact cc){
+        list<contact> clist = [select id, name,accountId,hubspot_score__c from contact where accountID =:cc.AccountId];
+        
+        list<decimal> newL = new list<decimal>();
+        for(contact c: clist){
+            newl.add(c.Hubspot_score__c);
+        }
+        
+        decimal result = clist[0].hubspot_score__c;
+        decimal sum=0;
+        integer n = clist.size();
+        Set<decimal> s = new Set<decimal>();
+        
+        for (integer i = 0; i < n; i++)
+        {
+            if (!s.contains(clist[i].hubspot_score__c))
+            {
+                sum += clist[i].hubspot_score__c;
+                s.add(clist[i].hubspot_score__c);
+            }
+        }
+        
+    
+        //list<> agr = [select distinct(Hubspot_score__c) from contact where accountId = :clist[0].AccountId];
+        
+        for(contact c: clist){
+            system.debug(c.hubspot_score__c);
+         }
+        system.debug(sum);
+        system.debug(n);
+        return sum/(s.size());
+        
+    }
+}

@@ -1,0 +1,20 @@
+trigger conTrigger on Contact (after insert,after update,after delete) {
+    
+    if(trigger.isinsert || trigger.isupdate){
+        decimal result = test.hub(trigger.new[0]);
+       
+        
+       account a = [select id, Avg_hubspot_score__c from account where id=:trigger.new[0].accountID];    
+       a.Avg_hubspot_score__c = result;
+       update a;
+    }
+    if(trigger.isdelete){
+        decimal result = test.hub(trigger.old[0]);
+       
+        
+       account a = [select id, Avg_hubspot_score__c from account where id=:trigger.old[0].accountID];    
+       a.Avg_hubspot_score__c = result;
+       update a;
+    }
+       
+}
